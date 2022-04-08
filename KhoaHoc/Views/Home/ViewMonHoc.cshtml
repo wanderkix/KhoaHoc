@@ -1,0 +1,31 @@
+﻿@model Model.Class1.KhoaHoc
+@{
+    var stt = 1;
+
+}
+@if (Model != null)
+{
+    <style>
+        h1.underline {
+            text-decoration: none;
+            box-shadow: 0 4px #00FF7F;
+            padding: 10px;
+            color: black;
+        }
+    </style>
+    <div>
+        <h1 class="underline">Khóa Học: @Html.Raw(Model.TenKhoaHoc)</h1>
+        @if (Model.lstMonHoc != null && Model.lstMonHoc.Any())
+        {
+            <ul>
+                @foreach (var item in Model.lstMonHoc)
+                {
+                    <li>@Html.Raw(stt + ".  "+ item.TenMonHoc)</li>
+                    stt++;
+                }
+
+            </ul>
+        }
+
+    </div>
+}

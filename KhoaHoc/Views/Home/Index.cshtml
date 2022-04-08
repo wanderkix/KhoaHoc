@@ -1,0 +1,100 @@
+﻿@model List<Model.Class1.KhoaHoc>
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Page Title</title>
+</head>
+<style>
+
+    body {
+        background-color: #fff;
+    }
+
+    .container {
+        width: 1200px;
+        margin: auto;
+    }
+
+        .container > * {
+            display: inline-block;
+            vertical-align: top;
+        }
+
+        .container .resuft {
+            width: 80%;
+        }
+
+        .container .zone_kh {
+            width: 19%;
+        }
+
+            .container .zone_kh h1 {
+            }
+
+    .accordion:hover, .accordion.active {
+        color: red;
+        cursor: pointer;
+    }
+    h1{
+        text-decoration: none;
+        box-shadow: 0 4px #00FF7F;
+        padding: 3px;
+        color: black;
+        transition: box-shadow .4s, color .3s;
+    }
+    h1:hover{
+        color: #FF0000;
+        box-shadow: 0 3px #00FFFF;
+    }
+</style>
+<body>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="container">
+            <div class="resuft">
+
+            </div>
+            <div class="zone_kh">
+                <h1 href="/">Khóa Học</h1>
+                <ul>
+                    @foreach (var item in Model)
+                    {
+                        <li class="accordion" data-id="@item.ID">@Html.Raw(item.TenKhoaHoc)</li>
+                    }
+                </ul>
+
+            </div>
+        </div>
+
+    }
+    <script src="~/lib/jquery/dist/jquery.min.js" type="text/javascript"></script>
+    <script>
+        $(".accordion").click(function(){
+            if($(this).hasClass("active"))
+                return;
+            $(".accordion").removeClass("active");
+            $(this).addClass("active");
+            var id=$(this).data('id');
+            $.ajax({
+                url:'/Home/ViewMonHoc',
+                cache:true,
+                data:{KhoaHocID:id},
+                type:"POST",
+                success: function(res){
+                    if(res !=""){
+                        $(".resuft").html(res);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
+
+
+
